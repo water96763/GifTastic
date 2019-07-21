@@ -1,53 +1,74 @@
 let topics = [];
 
-// function alertFruitName() {
-//   let fruitName = $(this).attr("data-name");
-// }
-
-
 function renderButtons() {
-  $("#gifInfo").empty();
-
-  for (var i = 0; i < topics.length; i++) {
-    var a = $("<button>");
-    a.addClass("fruit");
-    a.attr("data-name", topics[i]);
-    a.text(topics[i]);
-    $("#gifInfo").append(a);
-  }
+    $("#gifInfo").empty();
+    $("#gifStuff").empty();
+      for (var i = 0; i < topics.length; i++) {
+        var a = $("<button>");
+        a.addClass("fruit");
+        a.attr("data-name", topics[i]);
+        a.text(topics[i]);
+        $("#gifInfo").append(a);
+      }
 }
 
 function searchGiphy() {
-  
-  var fruit = $(this).attr("data-name");
-  var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=hDcyYQDAb4wguGxBI8nGwH1wyhq0SA1g&q=" + fruit + "&limit=10&lang=en";
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    console.log(response);
-    var fruitDiv = $("<div class='fruit'>")
-    var rating = response.rating;
-    var pOne = $("<p>").text("Rating: " + rating);
-    fruitDiv.append(pOne);
-    var imgURL = response.original_still.url;
-    var image = $("<img>").attr("src", imgURL);
-    fruitDiv.append(image);
-
+    $("#gifStuff").empty();
+    var fruit = $(this).attr("data-name");
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=hDcyYQDAb4wguGxBI8nGwH1wyhq0SA1g&q=" + fruit + "&limit=10&lang=en";
     
-    console.log(response.rating);
-    $("#gifInfo").text(JSON.stringify(response));
-  });
-};
+      $.ajax({
+          url: queryURL,
+          method: "GET"
+      }).then(function(response) {
+          console.log(response);
+          let results = response.data;
+          
+            for (var i= 0; i <results.length; i++) {
+              var fruitDiv = $("<div>");
 
-  $("#searchBtn").on("click", function(event) {
-    event.preventDefault();
-    var fruit = $("#gif-search").val().trim();
-    topics.push(fruit);
-    renderButtons();
-    // searchGiphy();
+              var rating = results[i].rating;
+              var p = $("<p>").text("Rating: " + results[i].rating);
+              fruitDiv.append(p);
+
+              var image = $("<img>");
+              image.attr({
+                "src": results[i].images.fixed_height_small_still.url,
+                "data-animate": results[i].images.fixed_height_small.url,
+                "data-still": results[i].images.fixed_height_small_still.url,
+                "data-state": "still",
+                "class": "gif"
+              });
+            fruitDiv.append(image);
+
+            $("#gifStuff").prepend(fruitDiv);
+            }
+      });
+  
+      $(document).on("click", ".gif", function() {
+        var state = $(this).attr("data-state");
+        if (state === "still") {
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state", "animate");
+        } else {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still");
+        }
+      }); 
+}
+
+$("#searchBtn").on("click", function(event) {
+  event.preventDefault();
+  var fruit = $("#gif-search").val().trim();
+  topics.push(fruit);
+  renderButtons();
 });
 
+// function clickButton() {
+//   searchGiphy();
+//   $("gitStuff").empty();
+// }
+// }
 $(document).on("click", ".fruit", searchGiphy);
 
 renderButtons();
