@@ -9,7 +9,8 @@ function renderButtons() {
         a.attr("data-name", topics[i]);
         a.text(topics[i]);
         $("#gifInfo").append(a);
-      }
+        $("#gifForm")[0].reset();
+           }
 }
 
 function searchGiphy() {
@@ -21,16 +22,12 @@ function searchGiphy() {
           url: queryURL,
           method: "GET"
       }).then(function(response) {
-          console.log(response);
           let results = response.data;
           
             for (var i= 0; i <results.length; i++) {
               var fruitDiv = $("<div>");
 
-              var rating = results[i].rating;
-              var p = $("<p>").text("Rating: " + results[i].rating);
-              fruitDiv.append(p);
-
+              
               var image = $("<img>");
               image.attr({
                 "src": results[i].images.fixed_height_small_still.url,
@@ -39,13 +36,16 @@ function searchGiphy() {
                 "data-state": "still",
                 "class": "gif"
               });
-            fruitDiv.append(image);
-
-            $("#gifStuff").prepend(fruitDiv);
+              fruitDiv.append(image);
+              var rating = results[i].rating;
+              var p = $("<p>").text("Rating: " + results[i].rating);
+              fruitDiv.append(p);
+              
+              $("#gifStuff").prepend(fruitDiv);
             }
-      });
-  
-      $(document).on("click", ".gif", function() {
+          });
+          
+          $(document).on("click", ".gif", function() {
         var state = $(this).attr("data-state");
         if (state === "still") {
           $(this).attr("src", $(this).attr("data-animate"));
@@ -64,11 +64,6 @@ $("#searchBtn").on("click", function(event) {
   renderButtons();
 });
 
-// function clickButton() {
-//   searchGiphy();
-//   $("gitStuff").empty();
-// }
-// }
 $(document).on("click", ".fruit", searchGiphy);
 
 renderButtons();

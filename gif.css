@@ -3,9 +3,11 @@ h1 {
     text-align: center;
 }
 
+
 .container {
     width: 90%;
-    white-space: pre-wrap;
+    align-self: auto;
+    /* white-space: pre-wrap; */
    
     }
 
@@ -13,6 +15,13 @@ h1 {
     display: inline-block;
 }
 
- {
+#gifForm {
+    text-align: center;
+}
+
+.gif {
+    border-width: thick;
+    margin: 20px;
+
 
 }
