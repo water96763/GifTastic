@@ -11,10 +11,14 @@
     <title>GifTastic</title>
 </head>
 <body>
-    <form name="myForm" action="/action_page.php" method="post">
-        Fruit name: <input type="text" id="fruit" name="fruitName">
-        <input type="submit" id="createBtn" value="Submit">
-        </form> 
+    <h1>GifTastic-search for gifs!</h1>
+    <form id="gifForm">
+        <label for="gif-search">Food name:</label>
+        <input type="text" id="gif-search"><br>
+        <input type="submit" id="searchBtn" value="Gif Search">
+    </form> 
+
+    <div id="gifInfo"></div>
 
 
     <script src="javascript.js"></script>
