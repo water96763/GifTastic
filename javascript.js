@@ -1,8 +1,8 @@
 let topics = [];
-$("#fish").on("click", function(event) {
+$("#fruit").on("click", function(event) {
     event.preventDefault();
-    var fishType = $("#fish").val().trim();
-    topics.push(fishType);
+    var fruitType = $("#fruit").val().trim();
+    topics.push(fruitType);
 
 console.log(topics);
 });
