@@ -5,3 +5,4 @@ This homework assignment has to do with making AJAX calls to GIPHY API via a but
 The buttons stay on the page, while the images are cleared for new ones.
 When the images are clicked, they become animated, and when clicked again, they become static.
 If you would like to donate to my cause, please let me know.
+See it in action at https://water96763.github.io/GifTastic/
